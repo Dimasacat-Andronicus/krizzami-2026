@@ -81,12 +81,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private typer?: ReturnType<typeof setInterval>;
   private hintTimer?: ReturnType<typeof setTimeout>;
+  private typingStartTimer?: ReturnType<typeof setTimeout>;
 
   get scene(): Scene { return this.scenes[this.index]; }
   get isLast(): boolean { return this.index === this.scenes.length - 1; }
 
   ngOnInit(): void { this.onEnter(); }
-  ngOnDestroy(): void { clearInterval(this.typer); clearTimeout(this.hintTimer); }
+  ngOnDestroy(): void {
+    clearInterval(this.typer);
+    clearTimeout(this.hintTimer);
+    clearTimeout(this.typingStartTimer);
+  }
 
   @HostListener('window:keydown', ['$event'])
   onKey(e: KeyboardEvent): void {
@@ -121,17 +126,21 @@ export class AppComponent implements OnInit, OnDestroy {
   private onEnter(): void {
     clearInterval(this.typer);
     clearTimeout(this.hintTimer);
+    clearTimeout(this.typingStartTimer);
     this.typed = '';
     this.hintVisible = false;
-    if (!this.isLast) {
+    if (!this.isLast && this.scene.type !== 'wish') {
       this.hintTimer = setTimeout(() => (this.hintVisible = true), this.scene.hintDelay);
     }
     if (this.scene.type === 'wish') {
       let i = 0;
-      setTimeout(() => {
+      this.typingStartTimer = setTimeout(() => {
         this.typer = setInterval(() => {
           this.typed = this.wishMessage.slice(0, ++i);
-          if (i >= this.wishMessage.length) clearInterval(this.typer);
+          if (i >= this.wishMessage.length) {
+            clearInterval(this.typer);
+            this.hintTimer = setTimeout(() => (this.hintVisible = true), 400);
+          }
         }, 45);
       }, 700);
     }

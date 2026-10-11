@@ -95,33 +95,24 @@
 .confetti i { position: absolute; top: -20px; width: 10px; height: 16px; border-radius: 2px; animation: fall linear infinite; }
 @keyframes fall { to { top: 110dvh; margin-left: 40px; rotate: 720deg; } }
 
-.replay { margin-top: 18px; padding: 10px 26px; border: 2px solid #fff; border-radius: 30px; background: rgba(255,255,255,.2); color: #fff; font: 700 1rem 'Quicksand', sans-serif; cursor: pointer; opacity: 0; animation: lineIn .8s 2.2s ease forwards; backdrop-filter: blur(4px); }
+.replay { margin-top: 18px; margin-bottom: 56px; padding: 10px 26px; border: 2px solid #fff; border-radius: 30px; background: rgba(255,255,255,.2); color: #fff; font: 700 1rem 'Quicksand', sans-serif; cursor: pointer; opacity: 0; animation: lineIn .8s 2.2s ease forwards; backdrop-filter: blur(4px); }
 
 /* creator credit */
 .credit {
-  margin-top: 22px;
+  position: fixed;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom) + 28px);
+  left: 0;
+  margin: 0;
   font-size: .85rem;
   font-weight: 600;
   letter-spacing: .12em;
   text-transform: lowercase;
+  text-align: center;
   color: rgba(255, 255, 255, .85);
   text-shadow: 0 2px 8px rgba(190, 40, 110, .45);
   opacity: 0;
-  animation: lineIn .8s 2.8s ease forwards; /* appears after the Replay button */
-}
-
-.credit span {
-  font-family: 'Great Vibes', cursive;
-  font-size: 1.6rem;
-  letter-spacing: 0;
-  color: #fff;
-  padding: 0 2px;
-  background: linear-gradient(90deg, #fff, #ffd6e8, #fff);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 3s linear infinite 3s;
+  animation: lineIn .8s 2.8s ease forwards;
 }
 
 /* ============ SCENE TRANSITIONS: IN ============ */

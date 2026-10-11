@@ -1,0 +1,143 @@
+:host { display: block; height: 100%; }
+
+.stage {
+  position: relative; height: 100dvh; width: 100%; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
+  cursor: pointer; transition: background 1s ease;
+}
+.bg-a { background: linear-gradient(160deg, #ffd1e5, #ff9ec7); }
+.bg-b { background: linear-gradient(200deg, #ffe3ef, #ff8fbf); }
+.bg-c { background: linear-gradient(135deg, #ffb3d4, #ff6fa8); }
+.bg-d { background: linear-gradient(180deg, #ffc9e0, #ff85b8 70%, #ff5c9d); }
+.bg-final { background: radial-gradient(circle at 50% 30%, #ffc2dd, #ff5c9d 80%); }
+
+/* floating hearts */
+.bg-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.float-heart { position: absolute; bottom: -40px; animation: rise linear infinite; }
+@keyframes rise {
+  0% { transform: translateY(0) rotate(0) scale(.8); }
+  100% { transform: translateY(-115dvh) rotate(40deg) scale(1.2); }
+}
+
+/* progress */
+.progress { position: absolute; top: calc(env(safe-area-inset-top) + 14px); left: 0; right: 0; display: flex; justify-content: center; gap: 6px; z-index: 5; }
+.progress i { width: 18px; height: 4px; border-radius: 4px; background: rgba(255,255,255,.45); transition: .4s; }
+.progress i.done { background: #fff; width: 26px; }
+
+.hint {
+  position: absolute; bottom: calc(env(safe-area-inset-bottom) + 28px); left: 0; right: 0; text-align: center;
+  font-size: .95rem; letter-spacing: .08em; color: #fff; text-shadow: 0 2px 8px rgba(190,40,110,.5);
+  animation: pulse 1.8s ease-in-out infinite; z-index: 5;
+}
+@keyframes pulse { 0%,100% { opacity: .4; transform: scale(.97); } 50% { opacity: 1; transform: scale(1.03); } }
+
+/* scene base */
+.scene { position: relative; z-index: 2; width: 100%; max-width: 480px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+.script { font-family: 'Great Vibes', cursive; font-weight: 400; color: #fff; text-shadow: 0 4px 18px rgba(200,40,110,.45); }
+.big { font-size: clamp(4rem, 22vw, 7rem); line-height: 1; }
+.small { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+.glow { animation: glow 2.4s ease-in-out infinite; }
+@keyframes glow { 50% { text-shadow: 0 0 30px #fff, 0 0 60px #ff8fc0; } }
+
+.gift { font-size: 5rem; animation: bounce 1.4s ease-in-out infinite; }
+@keyframes bounce { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-18px) rotate(6deg); } }
+
+.line { font-size: clamp(1.7rem, 8vw, 2.6rem); font-weight: 700; color: #fff; text-shadow: 0 3px 12px rgba(200,40,110,.4); opacity: 0; animation: lineIn .8s ease forwards; }
+.small-line { font-size: clamp(1.2rem, 5.5vw, 1.7rem); }
+@keyframes lineIn { from { opacity: 0; transform: translateY(24px) scale(.95); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+
+/* name letters */
+.letters { display: flex; justify-content: center; }
+.letter { font-size: clamp(3.5rem, 20vw, 6.5rem); opacity: 0; display: inline-block; animation: letterIn .9s cubic-bezier(.2,1.6,.4,1) forwards; }
+@keyframes letterIn { from { opacity: 0; transform: translateY(-80px) rotate(-30deg) scale(.3); } to { opacity: 1; transform: none; } }
+
+/* album */
+.album-title { font-size: clamp(2.4rem, 11vw, 3.4rem); }
+.album { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; padding: 6px; }
+.polaroid { background: #fff; padding: 8px 8px 4px; border-radius: 6px; box-shadow: 0 10px 24px rgba(160,30,90,.35); transform: rotate(var(--rot)); opacity: 0; animation: polaroidIn .8s cubic-bezier(.2,1.2,.4,1) forwards; }
+.photo { aspect-ratio: 1; background: linear-gradient(135deg, #ffd6e8, #ff9ec7); display: flex; align-items: center; justify-content: center; font-size: 3rem; overflow: hidden; border-radius: 3px; }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+.polaroid figcaption { font-size: .8rem; font-weight: 600; padding: 8px 2px 6px; color: #b3306f; }
+@keyframes polaroidIn {
+  from { opacity: 0; transform: perspective(600px) rotateY(90deg) rotate(var(--rot)) translateY(40px); }
+  to { opacity: 1; transform: perspective(600px) rotateY(0) rotate(var(--rot)); }
+}
+
+/* wish */
+.wish-card { background: rgba(255,255,255,.85); border-radius: 22px; padding: 24px 22px; min-height: 200px; font-size: 1.1rem; line-height: 1.7; font-weight: 600; box-shadow: 0 14px 34px rgba(160,30,90,.3); text-align: left; width: 100%; }
+.caret { animation: blink 1s steps(1) infinite; color: #ff4d94; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* cake */
+.cake { position: relative; width: 220px; height: 240px; margin-bottom: 8px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; animation: cakeIn 1s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes cakeIn { from { transform: translateY(80px) scale(.5); opacity: 0; } to { transform: none; opacity: 1; } }
+.layer { border-radius: 14px; box-shadow: inset 0 -6px 0 rgba(0,0,0,.08); }
+.l1 { width: 110px; height: 46px; background: #fff; border-top: 10px solid #ff9ec7; }
+.l2 { width: 160px; height: 52px; background: #ffd6e8; border-top: 10px solid #ff6fa8; }
+.l3 { width: 210px; height: 58px; background: #fff; border-top: 10px solid #ff8fbf; }
+.plate { width: 240px; height: 10px; background: #fff; border-radius: 10px; box-shadow: 0 6px 12px rgba(160,30,90,.3); }
+.candles { display: flex; gap: 22px; margin-bottom: -2px; }
+.candle { position: relative; width: 10px; height: 38px; background: repeating-linear-gradient(45deg, #fff, #fff 6px, #ff6fa8 6px, #ff6fa8 12px); border-radius: 3px; }
+.flame { position: absolute; top: -24px; left: 50%; width: 14px; height: 22px; margin-left: -7px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: radial-gradient(circle at 50% 70%, #fff7b0, #ffb347 70%); box-shadow: 0 0 18px 6px rgba(255,200,100,.7); animation: flicker .5s ease-in-out infinite alternate; }
+@keyframes flicker { from { transform: scale(1, 1) rotate(-3deg); } to { transform: scale(.9, 1.15) rotate(3deg); } }
+
+/* final */
+.final-small { font-size: clamp(2rem, 9vw, 2.8rem); animation: dropIn 1s cubic-bezier(.2,1.5,.4,1) both; }
+.final-name { font-size: clamp(4.5rem, 24vw, 8rem); line-height: 1; animation: dropIn 1.2s .3s cubic-bezier(.2,1.5,.4,1) both; }
+.shimmer { background: linear-gradient(90deg, #fff, #ffe0ef, #fff, #ffc2dd, #fff); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; filter: drop-shadow(0 4px 12px rgba(190,30,100,.5)); animation: dropIn 1.2s .3s cubic-bezier(.2,1.5,.4,1) both, shine 3s linear infinite 1.5s; }
+@keyframes shine { to { background-position: -300% 0; } }
+@keyframes dropIn { from { opacity: 0; transform: scale(2.5) rotate(-8deg); filter: blur(12px); } to { opacity: 1; transform: none; filter: none; } }
+
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.confetti i { position: absolute; top: -20px; width: 10px; height: 16px; border-radius: 2px; animation: fall linear infinite; }
+@keyframes fall { to { top: 110dvh; margin-left: 40px; rotate: 720deg; } }
+
+.replay { margin-top: 18px; padding: 10px 26px; border: 2px solid #fff; border-radius: 30px; background: rgba(255,255,255,.2); color: #fff; font: 700 1rem 'Quicksand', sans-serif; cursor: pointer; opacity: 0; animation: lineIn .8s 2.2s ease forwards; backdrop-filter: blur(4px); }
+
+/* ============ SCENE TRANSITIONS: IN ============ */
+.in-fade    { animation: inFade .9s ease both; }
+.in-slideUp { animation: inSlideUp .8s cubic-bezier(.2,.9,.3,1) both; }
+.in-zoom    { animation: inZoom .8s cubic-bezier(.2,1.3,.4,1) both; }
+.in-flip    { animation: inFlip .9s ease both; }
+.in-rotate  { animation: inRotate .9s cubic-bezier(.2,.9,.3,1) both; }
+.in-blur    { animation: inBlur .9s ease both; }
+.in-curtain { animation: inCurtain .9s ease both; }
+.in-burst   { animation: inBurst .9s cubic-bezier(.2,1.2,.4,1) both; }
+
+@keyframes inFade    { from { opacity: 0; } to { opacity: 1; } }
+@keyframes inSlideUp { from { opacity: 0; transform: translateY(100px); } to { opacity: 1; transform: none; } }
+@keyframes inZoom    { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: none; } }
+@keyframes inFlip    { from { opacity: 0; transform: perspective(900px) rotateX(-80deg); } to { opacity: 1; transform: perspective(900px) rotateX(0); } }
+@keyframes inRotate  { from { opacity: 0; transform: rotate(-25deg) scale(.6) translateX(-120px); } to { opacity: 1; transform: none; } }
+@keyframes inBlur    { from { opacity: 0; filter: blur(24px); transform: scale(1.2); } to { opacity: 1; filter: none; transform: none; } }
+@keyframes inCurtain { from { clip-path: inset(0 50% 0 50%); } to { clip-path: inset(0 0 0 0); } }
+@keyframes inBurst   { from { opacity: 0; transform: scale(2); filter: brightness(2); } to { opacity: 1; transform: none; filter: none; } }
+
+/* ============ SCENE TRANSITIONS: OUT ============ */
+.leave-fade    { animation: outFade .5s ease forwards; }
+.leave-slideUp { animation: outSlide .5s ease-in forwards; }
+.leave-zoom    { animation: outZoom .5s ease-in forwards; }
+.leave-flip    { animation: outFlip .5s ease-in forwards; }
+.leave-rotate  { animation: outRotate .5s ease-in forwards; }
+.leave-blur    { animation: outBlur .5s ease forwards; }
+.leave-curtain { animation: outCurtain .5s ease-in forwards; }
+.leave-burst   { animation: outFade .5s ease forwards; }
+
+@keyframes outFade    { to { opacity: 0; } }
+@keyframes outSlide   { to { opacity: 0; transform: translateY(-100px); } }
+@keyframes outZoom    { to { opacity: 0; transform: scale(2.5); filter: blur(10px); } }
+@keyframes outFlip    { to { opacity: 0; transform: perspective(900px) rotateY(90deg); } }
+@keyframes outRotate  { to { opacity: 0; transform: rotate(25deg) scale(.5) translateX(120px); } }
+@keyframes outBlur    { to { opacity: 0; filter: blur(24px); } }
+@keyframes outCurtain { to { clip-path: inset(0 50% 0 50%); } }
+
+/* small phones */
+@media (max-height: 640px) {
+  .cake { transform: scale(.8); }
+  .album { gap: 10px; }
+  .photo { font-size: 2rem; }
+}
+@media (min-width: 700px) { .scene { max-width: 560px; } }
+@media (prefers-reduced-motion: reduce) { .float-heart, .confetti i { animation: none; } }

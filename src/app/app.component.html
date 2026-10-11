@@ -1,0 +1,110 @@
+<main class="stage {{ scene.bg }}" (click)="next()">
+
+  <!-- floating background hearts -->
+  <div class="bg-layer">
+    @for (h of hearts; track $index) {
+      <span class="float-heart"
+            [style.left.%]="h.left"
+            [style.fontSize.px]="h.size"
+            [style.opacity]="h.op"
+            [style.animationDuration.s]="h.dur"
+            [style.animationDelay.s]="h.delay">{{ h.glyph }}</span>
+    }
+  </div>
+
+  <!-- progress dots -->
+  <div class="progress">
+    @for (s of scenes; track $index) {
+      <i [class.done]="$index <= index"></i>
+    }
+  </div>
+
+  <!-- current scene (re-created on each change so animations replay) -->
+  @for (s of [scene]; track index) {
+    <section [class]="'scene in-' + s.fx + (leaving ? ' leave-' + s.fx : '')">
+
+      @switch (s.type) {
+
+        @case ('intro') {
+          <div class="gift">🎁</div>
+          <p class="script small">A little surprise for</p>
+          <h1 class="script big glow">{{ name }}</h1>
+        }
+
+        @case ('text') {
+          @for (l of lines(); track $index) {
+            <p class="line" [style.animationDelay.ms]="300 + $index * 450">{{ l }}</p>
+          }
+        }
+
+        @case ('name') {
+          <p class="line small-line">Someone wonderful named</p>
+          <div class="letters">
+            @for (c of nameLetters; track $index) {
+              <span class="letter script" [style.animationDelay.ms]="400 + $index * 160">{{ c }}</span>
+            }
+          </div>
+          <p class="line small-line" style="animation-delay:1.9s">was born 🌸</p>
+        }
+
+        @case ('album') {
+          <p class="script album-title">Our Memories</p>
+          <div class="album">
+            @for (m of memories; track $index) {
+              <figure class="polaroid"
+                      [style.--rot]="(($index % 2 ? 1 : -1) * (4 + $index * 2)) + 'deg'"
+                      [style.animationDelay.ms]="300 + $index * 350">
+                <div class="photo">
+                  @if (m.src) { <img [src]="m.src" [alt]="m.caption"> } @else { <span>{{ m.emoji }}</span> }
+                </div>
+                <figcaption>{{ m.caption }}</figcaption>
+              </figure>
+            }
+          </div>
+        }
+
+        @case ('wish') {
+          <p class="script album-title">My wish for you</p>
+          <div class="wish-card">
+            <p>{{ typed }}<span class="caret">|</span></p>
+          </div>
+        }
+
+        @case ('cake') {
+          <div class="cake">
+            <div class="candles">
+              <div class="candle"><b class="flame"></b></div>
+              <div class="candle"><b class="flame" style="animation-delay:.2s"></b></div>
+              <div class="candle"><b class="flame" style="animation-delay:.4s"></b></div>
+            </div>
+            <div class="layer l1"></div>
+            <div class="layer l2"></div>
+            <div class="layer l3"></div>
+            <div class="plate"></div>
+          </div>
+          <p class="line" style="animation-delay:.6s">Make a wish ✨</p>
+        }
+
+        @case ('final') {
+          <div class="confetti">
+            @for (c of confetti; track $index) {
+              <i [style.left.%]="c.left"
+                 [style.background]="c.color"
+                 [style.animationDelay.s]="c.delay"
+                 [style.animationDuration.s]="c.dur"
+                 [style.transform]="'rotate(' + c.rot + 'deg)'"></i>
+            }
+          </div>
+          <p class="script final-small">🎉 Happy Birthday 🎉</p>
+          <h1 class="script final-name shimmer">{{ name }}!</h1>
+          <p class="line" style="animation-delay:1.2s">Wishing you the sweetest year yet 💖</p>
+          <button class="replay" (click)="replay($event)">↻ Replay</button>
+        }
+      }
+    </section>
+  }
+
+  @if (!isLast) {
+    <p class="hint">Tap the screen to continue</p>
+  }
+</main>

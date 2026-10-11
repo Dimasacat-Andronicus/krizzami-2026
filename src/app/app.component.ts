@@ -6,6 +6,7 @@ interface Scene {
   type: 'intro' | 'text' | 'name' | 'album' | 'wish' | 'cake' | 'final';
   fx: Fx;
   bg: string;
+  hintDelay: number;
 }
 
 interface Memory {
@@ -33,20 +34,19 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   readonly wishMessage =
-    'May your day be filled with love, laughter, and everything that makes your heart happy. ' +
-    'Thank you for being you. You deserve all the happiness in the world. 💕';
+    'Hope u have the best day ever!! Stay happy and keep smiling always. I hope u know how special u are and how much u deserve all the good things in life. Enjoy ur day to the fullest!! 💗🫶🏻'
   // -------------------------------------------------------------------
 
   readonly scenes: Scene[] = [
-    { type: 'intro', fx: 'fade', bg: 'bg-a' },
-    { type: 'text', fx: 'slideUp', bg: 'bg-b' },
-    { type: 'name', fx: 'zoom', bg: 'bg-c' },
-    { type: 'album', fx: 'flip', bg: 'bg-a' },
-    { type: 'text', fx: 'rotate', bg: 'bg-d' },
-    { type: 'wish', fx: 'blur', bg: 'bg-b' },
-    { type: 'cake', fx: 'curtain', bg: 'bg-c' },
-    { type: 'final', fx: 'burst', bg: 'bg-final' },
-  ];
+  { type: 'intro', fx: 'fade',    bg: 'bg-a',     hintDelay: 1800 },
+  { type: 'text',  fx: 'slideUp', bg: 'bg-b',     hintDelay: 2800 },
+  { type: 'name',  fx: 'zoom',    bg: 'bg-c',     hintDelay: 3400 },
+  { type: 'album', fx: 'flip',    bg: 'bg-a',     hintDelay: 2800 },
+  { type: 'text',  fx: 'rotate',  bg: 'bg-d',     hintDelay: 2800 },
+  { type: 'wish',  fx: 'blur',    bg: 'bg-b',     hintDelay: 700 + this.wishMessage.length * 45 + 400 },
+  { type: 'cake',  fx: 'curtain', bg: 'bg-c',     hintDelay: 2000 },
+  { type: 'final', fx: 'burst',   bg: 'bg-final', hintDelay: 0 },
+];
 
   // the two generic "text" scenes use these lines
   readonly textLines: Record<number, string[]> = {
@@ -57,6 +57,8 @@ export class AppComponent implements OnInit, OnDestroy {
   index = 0;
   leaving = false;
   busy = false;
+  hintVisible = false;
+  readonly lockUntilReady = true;
   typed = '';
   nameLetters = this.theName.split('');
 
@@ -78,12 +80,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }));
 
   private typer?: ReturnType<typeof setInterval>;
+  private hintTimer?: ReturnType<typeof setTimeout>;
 
   get scene(): Scene { return this.scenes[this.index]; }
   get isLast(): boolean { return this.index === this.scenes.length - 1; }
 
   ngOnInit(): void { this.onEnter(); }
-  ngOnDestroy(): void { clearInterval(this.typer); }
+  ngOnDestroy(): void { clearInterval(this.typer); clearTimeout(this.hintTimer); }
 
   @HostListener('window:keydown', ['$event'])
   onKey(e: KeyboardEvent): void {
@@ -92,6 +95,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   next(): void {
     if (this.busy || this.isLast) return;
+    if (this.lockUntilReady && !this.hintVisible) return;
     this.busy = true;
     this.leaving = true;
     setTimeout(() => {
@@ -116,7 +120,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private onEnter(): void {
     clearInterval(this.typer);
+    clearTimeout(this.hintTimer);
     this.typed = '';
+    this.hintVisible = false;
+    if (!this.isLast) {
+      this.hintTimer = setTimeout(() => (this.hintVisible = true), this.scene.hintDelay);
+    }
     if (this.scene.type === 'wish') {
       let i = 0;
       setTimeout(() => {

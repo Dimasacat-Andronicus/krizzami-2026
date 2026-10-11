@@ -22,13 +22,14 @@ interface Memory {
 })
 export class AppComponent implements OnInit, OnDestroy {
   // ✏️ EDIT THESE ----------------------------------------------------
-  readonly name = 'Krizza';
+  readonly name = 'Krizzami';
+  readonly theName = 'Krizza';
 
   readonly memories: Memory[] = [
-    { src: '', emoji: '🌸', caption: 'Our first memory' },
-    { src: '', emoji: '🎀', caption: 'Laughing for no reason' },
-    { src: '', emoji: '🍰', caption: 'Sweet little moments' },
-    { src: '', emoji: '✨', caption: 'Every adventure with you' },
+    { src: '../assets/photos/1.jpeg', emoji: '🌸', caption: '' },
+    { src: '../assets/photos/2.png', emoji: '🎀', caption: '' },
+    { src: '../assets/photos/3.jpeg', emoji: '🍰', caption: '' },
+    { src: '../assets/photos/4.png', emoji: '✨', caption: '' },
   ];
 
   readonly wishMessage =
@@ -57,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
   leaving = false;
   busy = false;
   typed = '';
-  nameLetters = this.name.split('');
+  nameLetters = this.theName.split('');
 
   hearts = Array.from({ length: 22 }, () => ({
     left: Math.random() * 100,

@@ -56,10 +56,10 @@
 /* album */
 .album-title { font-size: clamp(2.4rem, 11vw, 3.4rem); }
 .album { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; padding: 6px; }
-.polaroid { background: #fff; padding: 8px 8px 4px; border-radius: 6px; box-shadow: 0 10px 24px rgba(160,30,90,.35); transform: rotate(var(--rot)); opacity: 0; animation: polaroidIn .8s cubic-bezier(.2,1.2,.4,1) forwards; }
+.polaroid { background: #fff; padding: 8px 8px 20px; border-radius: 6px; box-shadow: 0 10px 24px rgba(160,30,90,.35); transform: rotate(var(--rot)); opacity: 0; animation: polaroidIn .8s cubic-bezier(.2,1.2,.4,1) forwards; }
 .photo { aspect-ratio: 1; background: linear-gradient(135deg, #ffd6e8, #ff9ec7); display: flex; align-items: center; justify-content: center; font-size: 3rem; overflow: hidden; border-radius: 3px; }
 .photo img { width: 100%; height: 100%; object-fit: cover; }
-.polaroid figcaption { font-size: .8rem; font-weight: 600; padding: 8px 2px 6px; color: #b3306f; }
+.polaroid figcaption { font-size: .8rem; font-weight: 600; padding: 8px 2px 20px; color: #b3306f; }
 @keyframes polaroidIn {
   from { opacity: 0; transform: perspective(600px) rotateY(90deg) rotate(var(--rot)) translateY(40px); }
   to { opacity: 1; transform: perspective(600px) rotateY(0) rotate(var(--rot)); }

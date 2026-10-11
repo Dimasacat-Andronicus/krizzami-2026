@@ -27,7 +27,7 @@
 
         @case ('intro') {
           <div class="gift">🎁</div>
-          <p class="script small">A little surprise for</p>
+          <p class="script small">A little surprise for you</p>
           <h1 class="script big glow">{{ name }}</h1>
         }
 
@@ -35,7 +35,7 @@
           @for (l of lines(); track $index) {
             <p class="line" [style.animationDelay.ms]="300 + $index * 450">{{ l }}</p>
           }
-        }
+        } 
 
         @case ('name') {
           <p class="line small-line">Someone wonderful named</p>
@@ -48,7 +48,7 @@
         }
 
         @case ('album') {
-          <p class="script album-title">Our Memories</p>
+          <p class="script album-title">Yourself</p>
           <div class="album">
             @for (m of memories; track $index) {
               <figure class="polaroid"

@@ -26,10 +26,10 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly theName = 'Krizza';
 
   readonly memories: Memory[] = [
-    { src: '../assets/photos/1.jpeg', emoji: '🌸', caption: '' },
+    { src: '../assets/photos/5.jpeg', emoji: '🌸', caption: '' },
     { src: '../assets/photos/2.png', emoji: '🎀', caption: '' },
-    { src: '../assets/photos/3.jpeg', emoji: '🍰', caption: '' },
-    { src: '../assets/photos/4.png', emoji: '✨', caption: '' },
+    { src: '../assets/photos/6.jpeg', emoji: '🍰', caption: '' },
+    { src: '../assets/photos/4.jpg', emoji: '✨', caption: '' },
   ];
 
   readonly wishMessage =

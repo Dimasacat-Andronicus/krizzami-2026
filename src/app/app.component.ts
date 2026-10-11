@@ -28,8 +28,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   readonly memories: Memory[] = [
     { src: '../assets/photos/5.jpeg', emoji: '🌸', caption: '' },
-    { src: '../assets/photos/6.png', emoji: '🎀', caption: '' },
-    { src: '../assets/photos/2.jpeg', emoji: '🍰', caption: '' },
+    { src: '../assets/photos/6.jpeg', emoji: '🎀', caption: '' },
+    { src: '../assets/photos/2.png', emoji: '🍰', caption: '' },
     { src: '../assets/photos/4.jpg', emoji: '✨', caption: '' },
   ];
 
